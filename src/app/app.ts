@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ExternalLinksMenuComponent } from './Components/external-links-menu.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true,
+  imports: [ExternalLinksMenuComponent],
+  template: `
+    <app-external-links-menu></app-external-links-menu>
+  `
 })
-export class App {
-  protected readonly title = signal('chaac-xanab');
-}
+export class App {}
