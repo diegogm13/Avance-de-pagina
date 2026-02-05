@@ -1,13 +1,24 @@
-<!-- Botón para abrir (fijo en la página, lado derecho) -->
-<button class="open-drawer-btn" (click)="toggleDrawer()" aria-expanded="{{drawerOpen}}" aria-controls="external-links-drawer">
-  <span class="btn-icon icon-emoji">☰</span>
+<!-- Botón para abrir (fijo en la página, arriba izquierda) -->
+<button
+  class="open-drawer-btn"
+  (click)="toggleDrawer()"
+  aria-expanded="{{drawerOpen}}"
+  aria-controls="external-links-drawer"
+  aria-label="Abrir enlaces"
+>
   <span class="btn-text">Enlaces</span>
 </button>
 
 <!-- Overlay oscuro cuando el drawer está abierto -->
-<div class="drawer-overlay" *ngIf="drawerOpen" (click)="closeDrawer()" tabindex="-1" aria-hidden="true"></div>
+<div
+  class="drawer-overlay"
+  *ngIf="drawerOpen"
+  (click)="closeDrawer()"
+  tabindex="-1"
+  aria-hidden="true"
+></div>
 
-<!-- Drawer / panel a la derecha -->
+<!-- Drawer / panel a la izquierda -->
 <aside
   id="external-links-drawer"
   class="external-drawer"
@@ -17,24 +28,24 @@
   aria-labelledby="drawer-title"
   aria-modal="true"
 >
-  <!-- Logo arriba a la derecha dentro del drawer -->
+  <!-- Top: logo a la izquierda dentro del drawer y botón cerrar a la derecha -->
   <div class="drawer-top">
     <img src="assets/logo.png" alt="Logo Chaac Xanab" class="drawer-logo" />
-    <button class="drawer-close" (click)="closeDrawer()" aria-label="Cerrar menú">
-      <span class="icon-emoji">✕</span>
-    </button>
+    <button class="drawer-close" (click)="closeDrawer()" aria-label="Cerrar menú"></button>
   </div>
 
   <header class="drawer-header">
     <h2 id="drawer-title">Chaac Xanab • Enlaces</h2>
     <div class="drawer-controls">
-      <button class="toggle-btn" (click)="toggleDescriptions()" title="Mostrar / ocultar descripciones">
-        <span class="btn-icon icon-emoji">{{ showDescriptions ? '📝' : '🔍' }}</span>
-        <span>{{ showDescriptions ? 'Descripciones ON' : 'Descripciones OFF' }}</span>
-      </button>
     </div>
+
     <div class="search-area">
-      <input type="search" placeholder="Buscar enlaces..." [(ngModel)]="searchTerm" aria-label="Buscar enlaces"/>
+      <input
+        type="search"
+        placeholder="Buscar enlaces..."
+        [(ngModel)]="searchTerm"
+        aria-label="Buscar enlaces"
+      />
     </div>
 
     <!-- Chips de categorías -->
@@ -57,22 +68,15 @@
       >
         <div class="link-header">
           <div class="link-icon">
-            <!-- Si viene FontAwesome usamos <i>, si no mostramos emoji -->
-            <ng-container *ngIf="link.iconFa; else emojiIcon">
+            <ng-container *ngIf="link.iconFa; else noIcon">
               <i [class]="link.iconFa + ' fa-fw'"></i>
             </ng-container>
-            <ng-template #emojiIcon>
-              <span class="icon-emoji">{{ getCustomIcon(link.icon) }}</span>
-            </ng-template>
+            <ng-template #noIcon></ng-template>
           </div>
 
           <div class="link-title-container">
             <h3 class="link-title">{{ link.title }}</h3>
             <span class="link-category">{{ link.category }}</span>
-          </div>
-
-          <div class="external-indicator" aria-hidden="true">
-            <span class="icon-emoji">↗️</span>
           </div>
         </div>
 
@@ -81,7 +85,6 @@
         </div>
 
         <div class="link-url">
-          <span class="url-icon icon-emoji">🔗</span>
           <span class="url-text">{{ link.url }}</span>
         </div>
 
@@ -91,18 +94,14 @@
       </div>
     </div>
 
-    <!-- Mensaje cuando no hay resultados -->
     <div *ngIf="filteredLinks.length === 0" class="no-results">
-      <span class="icon-emoji large-icon">🔎</span>
       <h3>No se encontraron enlaces en esta categoría</h3>
       <p>Intenta seleccionar otra categoría o verifica la configuración de enlaces.</p>
     </div>
   </main>
 
-  <!-- Información de seguridad -->
   <footer class="links-footer">
     <div class="security-notice" role="status">
-      <span class="icon-emoji">🛡️</span>
       <p>
         <strong>Nota de seguridad:</strong> Todos los enlaces externos se abrirán en una nueva pestaña
         con atributos de seguridad (noopener, noreferrer) para proteger tu privacidad.

@@ -4,11 +4,11 @@
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-/* Botón fijo para abrir el drawer */
+/* Botón fijo para abrir el drawer (ahora arriba izquierda) */
 .open-drawer-btn {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  left: 20px;
+  top: 20px;
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
   color: white;
   border: none;
@@ -32,24 +32,25 @@
   z-index: 998;
 }
 
-/* Drawer panel - por defecto cerrado (off-canvas) */
+/* Drawer panel - ahora a la izquierda (off-canvas por la izquierda) */
 .external-drawer {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;              /* cambiado a la izquierda */
+  right: auto;
   height: 100vh;
   width: min(420px, 92%);
   max-width: 480px;
-  transform: translateX(110%);
+  transform: translateX(-110%); /* cerrado hacia la izquierda */
   transition: transform 320ms cubic-bezier(.2,.9,.2,1);
   background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  box-shadow: -30px 0 50px rgba(2,6,23,0.55);
+  box-shadow: 30px 0 50px rgba(2,6,23,0.55); /* sombra hacia la derecha */
   padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   z-index: 999;
-  border-left: 1px solid rgba(255,255,255,0.03);
+  border-right: 1px solid rgba(255,255,255,0.03); /* borde derecho en lugar de izquierdo */
   color: #eaeef7;
   overflow: auto;
 }
@@ -59,10 +60,10 @@
   transform: translateX(0%);
 }
 
-/* Top area: logo y close */
+/* Top area: logo a la izquierda y close a la derecha */
 .drawer-top {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* logo a la izquierda, close a la derecha */
   align-items: center;
   gap: 12px;
 }
@@ -259,5 +260,5 @@
 /* Responsivo */
 @media (max-width: 640px) {
   .external-drawer { width: 100%; max-width: 100%; }
-  .open-drawer-btn { right: 12px; bottom: 12px; padding: 10px; }
+  .open-drawer-btn { left: 12px; top: 12px; padding: 10px; }
 }

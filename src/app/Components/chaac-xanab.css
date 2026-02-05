@@ -4,11 +4,11 @@
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-/* Botón fijo para abrir el drawer */
+/* Botón fijo para abrir el drawer (arriba izquierda) */
 .open-drawer-btn {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  left: 20px;   /* esquina superior izquierda */
+  top: 20px;
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
   color: white;
   border: none;
@@ -23,34 +23,37 @@
 }
 .open-drawer-btn:hover { transform: translateY(-3px); }
 
-/* Overlay */
+/* Overlay: más oscuro y elegante */
 .drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(5, 8, 23, 0.6);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.7); /* negro semi-transparente */
+  backdrop-filter: blur(3px);      /* ligero desenfoque */
   z-index: 998;
 }
 
-/* Drawer panel - por defecto cerrado (off-canvas) */
+/* Drawer panel - cerrado hacia la izquierda */
 .external-drawer {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
+  right: auto;
   height: 100vh;
   width: min(420px, 92%);
   max-width: 480px;
-  transform: translateX(110%);
+  transform: translateX(-110%);
   transition: transform 320ms cubic-bezier(.2,.9,.2,1);
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  box-shadow: -30px 0 50px rgba(2,6,23,0.55);
+
+  /* Fondo estilo Nike */
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+  box-shadow: 30px 0 50px rgba(0,0,0,0.7); /* sombra elegante */
   padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   z-index: 999;
-  border-left: 1px solid rgba(255,255,255,0.03);
-  color: #eaeef7;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  color: #ffffffcc; /* texto ligeramente transparente */
   overflow: auto;
 }
 
@@ -59,10 +62,10 @@
   transform: translateX(0%);
 }
 
-/* Top area: logo y close */
+/* Top area: logo a la izquierda y close a la derecha */
 .drawer-top {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
 }
@@ -72,27 +75,31 @@
   border-radius: 10px;
   object-fit: contain;
   box-shadow: 0 8px 20px rgba(118,75,162,0.16);
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 .drawer-close {
   background: transparent;
   border: none;
-  color: inherit;
-  font-size: 1.1rem;
+  color: #ffffffcc;
+  font-size: 1.2rem;
   cursor: pointer;
+  transition: color .2s;
+}
+.drawer-close:hover {
+  color: #ffffff;
 }
 
 /* Header dentro del drawer */
 .drawer-header {
   padding: 8px 0 4px 0;
-  border-bottom: 1px dashed rgba(255,255,255,0.03);
+  border-bottom: 1px dashed rgba(255,255,255,0.05);
 }
 .drawer-header h2 {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.2px;
-  color: #f2f6ff;
+  color: #fff;
 }
 
 /* Controls y búsqueda */
@@ -102,15 +109,22 @@
   gap: 8px;
 }
 .toggle-btn {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
   padding: 6px 8px;
   border-radius: 10px;
   display:flex;
   align-items:center;
   gap:6px;
   cursor:pointer;
+  color: #fff;
+  transition: background .2s, border .2s;
 }
+.toggle-btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.08);
+}
+
 .search-area {
   margin-top:10px;
 }
@@ -118,10 +132,13 @@
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.04);
-  color: #e9f0ff;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
   outline: none;
+}
+.search-area input[type="search"]::placeholder {
+  color: #ffffff99;
 }
 
 /* Category chips */
@@ -134,16 +151,21 @@
 .chip {
   padding:6px 10px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.02);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
   cursor:pointer;
   font-size:0.85rem;
+  color: #fff;
+  transition: background .2s, border .2s;
 }
 .chip.active {
   background: linear-gradient(90deg,#FFD166,#EF476F);
   color: #082032;
   font-weight:600;
   transform: translateY(-1px);
+}
+.chip:hover {
+  background: rgba(255,255,255,0.08);
 }
 
 /* Body: lista de enlaces */
@@ -161,17 +183,18 @@
   gap: 12px;
 }
 .link-card {
-  background: linear-gradient(135deg, rgba(118,75,162,0.12), rgba(102,126,234,0.06));
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
   border-radius: 12px;
   padding: 12px;
   cursor: pointer;
-  transition: transform .14s ease, box-shadow .14s ease;
-  border: 1px solid rgba(255,255,255,0.03);
+  transition: transform .14s ease, box-shadow .14s ease, background .2s;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 .link-card:focus,
 .link-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(56, 77, 153, 0.14);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.4);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   outline: none;
 }
 .link-header {
@@ -198,13 +221,13 @@
 .link-category {
   display:block;
   font-size:0.75rem;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.7);
 }
 
 /* description + url */
 .link-description {
   margin-top:10px;
-  color: rgba(235, 242, 255, 0.92);
+  color: rgba(255,255,255,0.85);
   font-size:0.92rem;
 }
 .link-url {
@@ -231,23 +254,23 @@
   text-align:center;
   padding:28px 18px;
   border-radius:12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
-  border: 1px dashed rgba(255,255,255,0.02);
-  color: rgba(235,242,255,0.85);
+  background: rgba(255,255,255,0.02);
+  border: 1px dashed rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.85);
 }
 
 /* footer seguridad */
 .links-footer {
   margin-top: auto;
   padding-top: 8px;
-  border-top: 1px dashed rgba(255,255,255,0.03);
+  border-top: 1px dashed rgba(255,255,255,0.05);
 }
 .security-notice {
   display:flex;
   align-items:flex-start;
   gap:12px;
   font-size:0.9rem;
-  color: rgba(235,242,255,0.9);
+  color: rgba(255,255,255,0.85);
 }
 
 /* Icon sizing helpers */
@@ -259,5 +282,5 @@
 /* Responsivo */
 @media (max-width: 640px) {
   .external-drawer { width: 100%; max-width: 100%; }
-  .open-drawer-btn { right: 12px; bottom: 12px; padding: 10px; }
+  .open-drawer-btn { left: 12px; top: 12px; padding: 10px; }
 }
